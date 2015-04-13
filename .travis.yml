@@ -10,9 +10,17 @@ android:
     # Additional components
     - extra-android-m2repository
 
+    # Specify a system image, to run an emulator for your tests
+    - sys-img-armeabi-v7a-android-22
+
 before_script:
   # Change Gradle wrapper permissions (Windows-related issue)
   - chmod +x gradlew
+  # Create and start emulator
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
 
 # Let's build
-script: ./gradlew clean build
+script: ./gradlew clean build connectedAndroidTest

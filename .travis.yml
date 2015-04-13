@@ -1,4 +1,11 @@
 language: android
+
+env:
+  global:
+    # Increase timeout to avoid exception
+    # Source: http://stackoverflow.com/questions/28949722/android-tests-fail-on-travis-with-shellcommandunresponsiveexception
+    - ADB_INSTALL_TIMEOUT=10 # minutes (2 minutes by default)
+
 android:
   components:
     # The build tools version used by your project
